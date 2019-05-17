@@ -23,6 +23,8 @@ let employees = [{
 }
 ]
 
+let totalMonthly = 0;
+
 function onReady() {
     $('#submitButton').on('click', addEmployee);
     $('#salaryTableBody').on('click', '.deleteButton', deleteEmployee);
@@ -42,9 +44,9 @@ function addEmployee() {
     <tr>
         <td>${firstName}</td>
         <td>${lastName}</td>
-        <td>${employeeId}</td>
+        <td class="employeeId">${employeeId}</td>
         <td>${title}</td>
-        <td>${annualSalary}</td>
+        <td class="annualSalary">${annualSalary}</td>
         <td><button class="deleteButton">Delete</button></td>
     </tr> 
     `)
@@ -59,11 +61,43 @@ function addEmployee() {
         annualSalary: annualSalary
     })
     console.log(employees);
+    calculateTotal();
 }
 
 //delete employee from table and from the array
 function deleteEmployee() {
+    //remove the employee from the array
+    // let salaryRemoved = $(this).closest('tr').children('.annualSalary').text();
+    let IdRemoved = $(this).closest('tr').children('.employeeId').text();
+
+    for(let i in employees) {
+        if(employees[i].employeeId === IdRemoved) {
+            employees.splice(i, 1);
+        }
+    }
+
+    console.log(employees);
+
     //remove the row from the table
     $(this).closest('tr').remove();
+
+    calculateTotal();
   
+}
+
+//calculate total monthly cost and replace it in the DOM
+function calculateTotal() {
+    totalMonthly = 0;
+    for(let employee of employees) {
+        totalMonthly += Number(employee.annualSalary);
+    }
+    //update total in the DOM
+    $('#totalMonthly').text(totalMonthly);
+    //check if exceeds 20,000
+    if(totalMonthly > 200000) {
+        $('#totalMonthly').css('background-color', 'red');
+    } else {
+        $('#totalMonthly').css('background-color', 'white');
+    }
+
 }
