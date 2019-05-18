@@ -33,12 +33,33 @@ function onReady() {
 
 //add employee to the array from the input value
 function addEmployee() {
+    $('p').empty();
     //get value from input
     let firstName = $("#firstName").val();
     let lastName = $("#lastName").val();
     let employeeId = $("#employeeId").val();
     let title = $("#title").val();
     let annualSalary = $("#annualSalary").val();
+
+    //check if salary < 0
+    if(annualSalary < 0) {
+        $('#addEmployee').append('<p>Salary cannot be negative</p>');
+        return;
+    }
+
+    //check if any field is blank
+    if(firstName === '' || lastName === '' || employeeId === '' || title === '' || annualSalary === '') {
+        $('#addEmployee').append('<p>Input field cannot be empty</p>');
+        return;
+    }
+
+    //check if employee ID is duplicate
+    for(let employee of employees) {
+        if(employeeId === employee.employeeId) {
+            $('#addEmployee').append('<p>Employee ID must be unique</p>');
+            return;
+        }
+    }
 
     //push values to the array
     employees.push({
