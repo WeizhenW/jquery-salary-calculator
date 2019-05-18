@@ -39,7 +39,7 @@ function addEmployee() {
     let lastName = $("#lastName").val();
     let employeeId = $("#employeeId").val();
     let title = $("#title").val();
-    let annualSalary = $("#annualSalary").val();
+    let annualSalary = Number($("#annualSalary").val());
 
     //input values validation
     //check if salary < 0
@@ -91,7 +91,8 @@ function appendTable() {
         <td>${employee.lastName}</td>
         <td class="employeeId">${employee.employeeId}</td>
         <td>${employee.title}</td>
-        <td class="annualSalary">$ ${employee.annualSalary}</td>
+        <td class="annualSalary">$ ${employee.annualSalary.toLocaleString(
+            undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
         <td class="deleteButtonTd"><button class="deleteButton">Delete</button></td>
     </tr> 
     `)
@@ -121,7 +122,8 @@ function calculateTotal() {
         totalMonthly += Number(employee.annualSalary);
     }
     //update total in the DOM
-    $('#totalMonthly').text(totalMonthly);
+    $('#totalMonthly').text(totalMonthly.toLocaleString(
+        undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}));//number formatting
     //check if exceeds $20,000
     if(totalMonthly > 200000) {
         $('#totalMonthly').css('background-color', 'red');
