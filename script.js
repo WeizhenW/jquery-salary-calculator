@@ -41,6 +41,7 @@ function addEmployee() {
     let title = $("#title").val();
     let annualSalary = $("#annualSalary").val();
 
+    //input values validation
     //check if salary < 0
     if(annualSalary < 0) {
         $('#addEmployee').append('<p>Salary cannot be negative</p>');
@@ -53,7 +54,7 @@ function addEmployee() {
         return;
     }
 
-    //check if employee ID is duplicate
+    //check if employee ID is duplicated
     for(let employee of employees) {
         if(employeeId === employee.employeeId) {
             $('#addEmployee').append('<p>Employee ID must be unique</p>');
@@ -80,7 +81,6 @@ function addEmployee() {
 }
 
 function appendTable() {
-
     //clear the existing table content
     $('.employeeRow').remove();
     //loop through array to add all employees to table
@@ -108,12 +108,10 @@ function deleteEmployee() {
             employees.splice(i, 1);
         }
     }
-
     //call function to update the table
     appendTable();
     //update the monthly total
     calculateTotal();
-  
 }
 
 //calculate total monthly cost and replace it in the DOM
@@ -130,5 +128,4 @@ function calculateTotal() {
     } else {
         $('#totalMonthly').css('background-color', 'white');
     }
-
 }
