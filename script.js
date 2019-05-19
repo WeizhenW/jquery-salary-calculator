@@ -116,16 +116,20 @@ function deleteEmployee() {
 }
 
 //calculate total monthly cost and replace it in the DOM
+//note: should display total monthly, not annual!!
 function calculateTotal() {
+    let totalAnnual = 0;
     totalMonthly = 0;
     for(let employee of employees) {
-        totalMonthly += Number(employee.annualSalary);
+        totalAnnual += Number(employee.annualSalary);
     }
+    //calc total monthly
+    totalMonthly = totalAnnual / 12;
     //update total in the DOM
     $('#totalMonthly').text(totalMonthly.toLocaleString(
         undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}));//number formatting
-    //check if exceeds $20,000
-    if(totalMonthly > 200000) {
+    //check if exceeds $20,000 => display red background, otherwise display white
+    if(totalMonthly > 20000) {
         $('#totalMonthly').css('background-color', 'red');
     } else {
         $('#totalMonthly').css('background-color', 'white');
